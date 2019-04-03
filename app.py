@@ -50,6 +50,25 @@ def predict():
         print("hi")
 
         user = request.args.get('user')
+
+        myProfile = {
+            "U1001" : {
+                "name" : "Riya Patil",
+                "password" : "123"
+            },
+            "U1002" : {
+                "name" : "Prachiti Patil",
+                "password" : "123"
+            },
+            "U1003" : {
+                "name" : "Amey Patil",
+                "password" : "123"
+            },
+            "U1004" : {
+                "name" : "Priyanka Patil",
+                "password" : "123"
+            }
+        }
         userData = ( prof.loc[user , :].to_json() )
         userData = json.loads(userData.replace("\'", '"'))
 
@@ -70,7 +89,7 @@ def predict():
         
         # # print(hot)
 
-        return jsonify( { "userData" : userData, "hotels" : hotels , "status"  : True } )
+        return jsonify( { "userData" : userData, "profile" : myProfile[user],"hotels" : hotels , "status"  : True } )
 
     except Exception as e:
         return jsonify( { "result" : "error" , "status"  : False  } )      
