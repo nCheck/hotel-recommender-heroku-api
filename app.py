@@ -10,8 +10,10 @@ import requests
 
 
 
-predictions = pd.read_csv("predictionApi.csv")
+predictions = pd.read_csv("predictionApi.csv",index_col=0)
 prof = pd.read_csv("profileApi.csv")
+hotelData = pd.read_csv("hotels-dataset.csv")
+hotelData.set_index('id', inplace=True)
 prof.set_index('userID', inplace=True)
 
 
@@ -52,16 +54,20 @@ def predict():
         userData = json.loads(userData.replace("\'", '"'))
 
         hotelList = predictions[user]
-        # print(hotelList.values)
-        arr = ( hotelList.sort_values(ascending=False)[:10].values )
-        
-        hotels = {}
+        # print(hotelList[:10])
+        arr = ( hotelList.sort_values(ascending=False)[:10].index )
+        # print(arr)
+        hotels = hotelData.loc[ arr , : ].to_json(orient='records')
 
-        for i,a in enumerate(arr):
-            
-            hotels[i] = a
-        
         print(hotels)
+        hot = {}
+
+        # i = 0
+        # for row in hotels.iterrows():
+        #     hot[i] = row.to_json(orient='values')
+        #     i += 1
+        
+        # print(hot)
 
         return jsonify( { "userData" : userData, "hotels" : hotels , "status"  : True } )
 
