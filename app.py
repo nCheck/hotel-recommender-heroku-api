@@ -57,17 +57,18 @@ def predict():
         # print(hotelList[:10])
         arr = ( hotelList.sort_values(ascending=False)[:10].index )
         # print(arr)
-        hotels = hotelData.loc[ arr , : ].to_json(orient='records')
+        hotels = hotelData.loc[ arr , : ].to_dict('records')
 
+        # hotels = json.loads(hotels.replace("\'", '"'))
         print(hotels)
-        hot = {}
+        # hot = {}
 
         # i = 0
-        # for row in hotels.iterrows():
-        #     hot[i] = row.to_json(orient='values')
+        # for row in hotels:
+        #     hot[i] = row
         #     i += 1
         
-        # print(hot)
+        # # print(hot)
 
         return jsonify( { "userData" : userData, "hotels" : hotels , "status"  : True } )
 
