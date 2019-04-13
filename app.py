@@ -78,6 +78,9 @@ def predict():
         # print(arr)
         hotels = hotelData.loc[ arr , : ].to_dict('records')
 
+        for h,a in zip(hotels,arr):
+            h['hotelId'] = a
+
         # hotels = json.loads(hotels.replace("\'", '"'))
         print(hotels)
         # hot = {}
